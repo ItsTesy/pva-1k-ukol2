@@ -1,28 +1,18 @@
 import random
 
-beats = {
-    "kamen": ["nuzky", "jesterka"],
-    "nuzky": ["papir", "jesterka"],
-    "papir": ["kamen", "spock"],
-    "jesterka": ["papir", "spock"],
-    "spock": ["kamen", "nuzky"],
-}
+choices = ["kamen", "nuzky", "papir"]
+beats = {"kamen": "nuzky", "nuzky": "papir", "papir": "kamen"}
 
 mode = ""
 while mode not in ["1", "2", "3"]:
     mode = input("1 normalni, 2 best of five, 3 pocitac vzdy vyhraje: ")
-
-if input("i s jesterkou a spockem? (a/n): ") == "a":
-    choices = ["kamen", "nuzky", "papir", "jesterka", "spock"]
-else:
-    choices = ["kamen", "nuzky", "papir"]
 
 wins = 0
 losses = 0
 ties = 0
 
 while True:
-    player = input("/".join(choices) + " nebo konec: ").lower()
+    player = input("kamen/nuzky/papir nebo konec: ").lower()
 
     if player == "konec":
         break
@@ -31,11 +21,9 @@ while True:
         continue
 
     if mode == "3":
-        options = []
         for c in choices:
-            if player in beats[c]:
-                options.append(c)
-        pc = random.choice(options)
+            if beats[c] == player:
+                pc = c
     else:
         pc = random.choice(choices)
 
@@ -44,7 +32,7 @@ while True:
     if player == pc:
         print("remiza")
         ties += 1
-    elif pc in beats[player]:
+    elif beats[player] == pc:
         print("vyhral jsi")
         wins += 1
     else:
